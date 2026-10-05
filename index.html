@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko" data-lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Climate Threshold Lab | 산림재난 기상 임계값 연구소</title>
+<meta name="description" content="Climate Threshold Lab은 산림재난을 다루는 독립 연구·자문 연구소입니다. 산불과 산사태, 집중호우의 기상 임계점을 찾아 지수와 조기경보 도구, 의사결정 자문으로 제공합니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://climatethreshold.org/">
+<meta property="og:title" content="Climate Threshold Lab">
+<meta property="og:description" content="Independent research and advisory lab for forest disasters. Weather thresholds behind wildfires, landslides and extreme rainfall.">
+<link rel="canonical" href="https://climatethreshold.org/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23173F31'/%3E%3Crect x='6' y='19' width='4' height='7' fill='%23fff'/%3E%3Crect x='14' y='7' width='4' height='19' fill='%23E2572B'/%3E%3Crect x='22' y='16' width='4' height='10' fill='%23fff'/%3E%3Crect x='3' y='12' width='26' height='1.5' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAFBFA; --ink:#14201B; --soft:#55645D; --rule:#D3DAD6; --wash:#EEF2EF;
+  --pine:#173F31; --ember:#C8401E;
+  --c-slide:#8A5A2B; --c-rain:#1F5FA8; --c-fire:#C8401E; --c-dry:#A67C00; --c-pest:#4E7A3A;
+  --bar:#B9C4BE;
+  --font:"IBM Plex Sans","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --w:1120px; --gut:clamp(20px,4vw,40px);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#101714; --ink:#E7EDE9; --soft:#9DACA4; --rule:#2B3731; --wash:#18211D;
+    --pine:#9FD3BC; --ember:#F0683F;
+    --c-slide:#D19A5E; --c-rain:#6FA8E8; --c-fire:#F0683F; --c-dry:#E0B93A; --c-pest:#8FC076;
+    --bar:#3A4842;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
+html[data-lang="ko"] .en{display:none!important}
+html[data-lang="en"] .ko{display:none!important}
+html[data-lang="en"] body{line-height:1.6}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{color:var(--ember)}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 var(--gut)}
+[hidden]{display:none!important}
+
+/* 머리말 */
+.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:24px;height:60px}
+.mark{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+.mark svg{width:22px;height:22px;flex:none}
+.nav{display:flex;gap:22px;margin-left:auto;font-size:15px}
+.nav a{text-decoration:none;color:var(--soft)}
+.nav a:hover{color:var(--ink)}
+.lang{display:flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;font-size:13px;flex:none}
+.lang button{font:inherit;background:none;border:0;color:var(--soft);padding:5px 12px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+@media (max-width:820px){.nav{display:none}.lang{margin-left:auto}}
+
+/* 첫 화면 */
+.hero{padding:clamp(48px,9vw,112px) 0 0}
+.hero h1{font-weight:300;font-size:clamp(32px,5.4vw,62px);line-height:1.22;letter-spacing:-.025em;margin:0;max-width:17em;text-wrap:balance}
+html[data-lang="en"] .hero h1{line-height:1.12;max-width:15em}
+.hero p{font-size:clamp(17px,1.6vw,20px);color:var(--soft);max-width:36em;margin:28px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.btn{display:inline-block;padding:11px 22px;border:1px solid var(--ink);border-radius:2px;text-decoration:none;font-weight:500;font-size:16px}
+.btn.fill{background:var(--ink);color:var(--paper)}
+.btn:hover{border-color:var(--ember);color:var(--ember)}
+.btn.fill:hover{background:var(--ember);color:#fff}
+
+.figure{margin:clamp(40px,7vw,80px) 0 0}
+.plot{position:relative;height:clamp(150px,24vw,280px)}
+.thr-chart{display:block;width:100%;height:100%}
+.thr-chart .bar{fill:var(--bar);transform-box:fill-box;transform-origin:bottom}
+.thr-chart .bar.over{fill:var(--ember)}
+.thr-chart .base{stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
+.thr-chart .thr{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:none;vector-effect:non-scaling-stroke}
+.tag{position:absolute;font-size:13px;line-height:1;white-space:nowrap}
+.tag.t-thr{left:0;top:48.67%;transform:translateY(-140%);font-weight:500}
+.tag.t-over{right:0;top:0;color:var(--ember);font-weight:500}
+.figure figcaption{font-size:14px;color:var(--soft);margin-top:14px;max-width:44em}
+@media (prefers-reduced-motion:no-preference){
+  .thr-chart .bar{animation:rise .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*12ms)}
+  .thr-chart .thr{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .9s ease-out .75s forwards}
+  .tag{animation:fade .5s ease-out 1.4s both}
+  @keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+}
+
+/* 구역 공통: 왼쪽에 구역 이름, 오른쪽에 내용 */
+.sec{border-top:1px solid var(--rule);margin-top:clamp(56px,9vw,104px);padding-top:28px}
+.sec > .wrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:24px var(--gut)}
+.sec h2{font-size:15px;font-weight:600;margin:4px 0 0;color:var(--pine)}
+.sec .lead{font-size:clamp(20px,2.3vw,26px);font-weight:300;line-height:1.5;letter-spacing:-.01em;margin:0 0 32px;max-width:30em}
+html[data-lang="en"] .sec .lead{line-height:1.4}
+@media (max-width:820px){.sec > .wrap{grid-template-columns:1fr;gap:12px}}
+
+/* 하는 일 */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gut)}
+.three h3{font-size:19px;font-weight:600;margin:0 0 8px}
+.three p{margin:0;color:var(--soft);font-size:16px}
+@media (max-width:820px){.three{grid-template-columns:1fr;gap:28px}}
+
+/* 연구 분야 */
+.areas{list-style:none;margin:0;padding:0}
+.areas li{display:grid;grid-template-columns:minmax(0,2.6fr) minmax(0,6.4fr);gap:8px var(--gut);padding:20px 0 20px 18px;border-top:1px solid var(--rule);position:relative}
+.areas li::before{content:"";position:absolute;left:0;top:22px;bottom:22px;width:4px;background:var(--c)}
+.areas li:last-child{border-bottom:1px solid var(--rule)}
+.areas h3{font-size:22px;font-weight:500;margin:0;letter-spacing:-.01em}
+.areas p{margin:2px 0 0;color:var(--soft);font-size:16px}
+.areas .next h3{color:var(--soft);font-weight:400}
+.stage{display:block;font-size:13px;font-weight:500;color:var(--soft);margin-top:4px}
+.sub{font-size:15px;font-weight:600;margin:40px 0 12px;color:var(--soft)}
+@media (max-width:820px){.areas li{grid-template-columns:1fr}}
+
+/* 서비스 */
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:var(--gut)}
+.tool{border:1px solid var(--rule);padding:24px;background:var(--wash)}
+.tool h3{font-size:19px;font-weight:600;margin:10px 0 8px}
+.tool p{margin:0;font-size:16px;color:var(--soft)}
+.status{display:inline-block;font-size:13px;font-weight:500;padding:2px 10px;border:1px solid currentColor;border-radius:999px;color:var(--c)}
+.note{font-size:14px;color:var(--soft);margin:20px 0 0;max-width:46em}
+@media (max-width:820px){.tools{grid-template-columns:1fr}}
+
+/* 논문 */
+.pubs{list-style:none;margin:0;padding:0}
+.pubs li{padding:18px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:4px 20px}
+.pubs li:last-child{border-bottom:1px solid var(--rule)}
+.pubs .kind{font-size:13px;font-weight:500;color:var(--soft);padding-top:4px}
+.pubs .title{font-weight:500;font-size:17px;line-height:1.5}
+.pubs .meta{font-size:14.5px;color:var(--soft);margin-top:4px}
+@media (max-width:560px){.pubs li{grid-template-columns:1fr}}
+
+/* 자문 */
+.adv{list-style:none;margin:0 0 28px;padding:0;counter-reset:none}
+.adv li{padding:16px 0;border-top:1px solid var(--rule)}
+.adv li:last-child{border-bottom:1px solid var(--rule)}
+.adv b{font-weight:600;display:block;font-size:18px}
+.adv span{color:var(--soft);font-size:16px}
+
+/* 소개 */
+.about{display:grid;grid-template-columns:132px minmax(0,1fr);gap:var(--gut);align-items:start}
+.photo{position:relative;width:132px;height:132px;background:var(--pine);color:var(--paper);display:grid;place-items:center;font-size:40px;font-weight:300;letter-spacing:.02em;overflow:hidden}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.about h3{font-size:22px;font-weight:500;margin:0}
+.about .role{color:var(--soft);font-size:15px;margin:2px 0 14px}
+.about p{margin:0 0 14px;max-width:40em}
+.links{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:15px;margin-top:6px}
+.indep{font-size:14px;color:var(--soft)}
+@media (max-width:560px){.about{grid-template-columns:1fr}.photo{width:96px;height:96px;font-size:30px}}
+
+/* 꼬리말 */
+footer{border-top:1px solid var(--rule);margin-top:clamp(56px,9vw,104px);padding:36px 0 56px;font-size:14.5px;color:var(--soft)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:16px var(--gut)}
+footer strong{color:var(--ink);font-weight:600}
+footer p{margin:0 0 8px;max-width:48em}
+@media (max-width:820px){footer .wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Climate Threshold Lab">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="19" width="5" height="9" fill="currentColor" opacity=".45"/><rect x="13.5" y="5" width="5" height="23" fill="var(--ember)"/><rect x="23" y="16" width="5" height="12" fill="currentColor" opacity=".45"/><rect x="1" y="11" width="30" height="1.6" fill="currentColor"/></svg>
+      Climate Threshold Lab
+    </a>
+    <nav class="nav" aria-label="구역">
+      <a href="#areas"><span class="ko">연구 분야</span><span class="en">Focus</span></a>
+      <a href="#tools"><span class="ko">서비스</span><span class="en">Tools</span></a>
+      <a href="#pubs"><span class="ko">논문</span><span class="en">Publications</span></a>
+      <a href="#advisory"><span class="ko">자문</span><span class="en">Advisory</span></a>
+      <a href="#about"><span class="ko">소개</span><span class="en">About</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-set="ko" aria-pressed="true">한국어</button>
+      <button type="button" data-set="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <h1>
+        <span class="ko">산불과 산사태, 집중호우의 기상 임계점을 찾습니다.</span>
+        <span class="en">We find the weather thresholds behind wildfires, landslides and extreme rainfall.</span>
+      </h1>
+      <p>
+        <span class="ko">Climate Threshold Lab은 산림재난을 다루는 독립 연구·자문 연구소입니다. 찾아낸 임계점을 지수와 조기경보 도구, 의사결정 자문으로 제공합니다.</span>
+        <span class="en">Climate Threshold Lab is an independent research and advisory lab for forest disasters. We turn those thresholds into indices, early-warning tools and decision advice.</span>
+      </p>
+      <div class="cta">
+        <a class="btn fill" href="#areas"><span class="ko">연구 분야 보기</span><span class="en">See our focus areas</span></a>
+        <a class="btn" href="mailto:karl@climatethreshold.org"><span class="ko">문의하기</span><span class="en">Get in touch</span></a>
+      </div>
+
+      <figure class="figure">
+        <div class="plot">
+          <svg class="thr-chart" viewBox="0 0 1120 300" role="img" aria-labelledby="chartTitle chartDesc" preserveAspectRatio="none">
+<title id="chartTitle">일 강우량과 임계값 예시</title>
+<desc id="chartDesc">61일 동안의 일 강우량 막대 가운데 임계값 선을 넘은 5일이 강조되어 있습니다.</desc>
+<rect class="bar" style="--i:0" x="0.0" y="265.6" width="14.4" height="2.4"/>
+<rect class="bar" style="--i:1" x="18.4" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:2" x="36.9" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:3" x="55.3" y="261.9" width="14.4" height="6.1"/>
+<rect class="bar" style="--i:4" x="73.7" y="253.4" width="14.4" height="14.6"/>
+<rect class="bar" style="--i:5" x="92.1" y="264.3" width="14.4" height="3.7"/>
+<rect class="bar" style="--i:6" x="110.6" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:7" x="129.0" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:8" x="147.4" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:9" x="165.8" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:10" x="184.3" y="258.2" width="14.4" height="9.8"/>
+<rect class="bar" style="--i:11" x="202.7" y="241.2" width="14.4" height="26.8"/>
+<rect class="bar" style="--i:12" x="221.1" y="218.0" width="14.4" height="50.0"/>
+<rect class="bar" style="--i:13" x="239.5" y="150.9" width="14.4" height="117.1"/>
+<rect class="bar over" style="--i:14" x="258.0" y="99.6" width="14.4" height="168.4"/>
+<rect class="bar" style="--i:15" x="276.4" y="189.9" width="14.4" height="78.1"/>
+<rect class="bar" style="--i:16" x="294.8" y="246.0" width="14.4" height="22.0"/>
+<rect class="bar" style="--i:17" x="313.2" y="263.1" width="14.4" height="4.9"/>
+<rect class="bar" style="--i:18" x="331.7" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:19" x="350.1" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:20" x="368.5" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:21" x="387.0" y="264.3" width="14.4" height="3.7"/>
+<rect class="bar" style="--i:22" x="405.4" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:23" x="423.8" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:24" x="442.2" y="260.7" width="14.4" height="7.3"/>
+<rect class="bar" style="--i:25" x="460.7" y="265.6" width="14.4" height="2.4"/>
+<rect class="bar" style="--i:26" x="479.1" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:27" x="497.5" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:28" x="515.9" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:29" x="534.4" y="254.6" width="14.4" height="13.4"/>
+<rect class="bar" style="--i:30" x="552.8" y="235.1" width="14.4" height="32.9"/>
+<rect class="bar" style="--i:31" x="571.2" y="257.0" width="14.4" height="11.0"/>
+<rect class="bar" style="--i:32" x="589.6" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:33" x="608.1" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:34" x="626.5" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:35" x="644.9" y="265.6" width="14.4" height="2.4"/>
+<rect class="bar" style="--i:36" x="663.3" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:37" x="681.8" y="250.9" width="14.4" height="17.1"/>
+<rect class="bar" style="--i:38" x="700.2" y="227.7" width="14.4" height="40.3"/>
+<rect class="bar" style="--i:39" x="718.6" y="181.4" width="14.4" height="86.6"/>
+<rect class="bar over" style="--i:40" x="737.0" y="131.4" width="14.4" height="136.6"/>
+<rect class="bar over" style="--i:41" x="755.5" y="39.9" width="14.4" height="228.1"/>
+<rect class="bar over" style="--i:42" x="773.9" y="120.4" width="14.4" height="147.6"/>
+<rect class="bar" style="--i:43" x="792.3" y="204.6" width="14.4" height="63.4"/>
+<rect class="bar" style="--i:44" x="810.8" y="248.5" width="14.4" height="19.5"/>
+<rect class="bar" style="--i:45" x="829.2" y="264.3" width="14.4" height="3.7"/>
+<rect class="bar" style="--i:46" x="847.6" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:47" x="866.0" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:48" x="884.5" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:49" x="902.9" y="261.9" width="14.4" height="6.1"/>
+<rect class="bar" style="--i:50" x="921.3" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:51" x="939.7" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:52" x="958.2" y="265.6" width="14.4" height="2.4"/>
+<rect class="bar" style="--i:53" x="976.6" y="257.0" width="14.4" height="11.0"/>
+<rect class="bar" style="--i:54" x="995.0" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:55" x="1013.4" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:56" x="1031.9" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:57" x="1050.3" y="263.1" width="14.4" height="4.9"/>
+<rect class="bar" style="--i:58" x="1068.7" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:59" x="1087.1" y="266.5" width="14.4" height="1.5"/>
+<rect class="bar" style="--i:60" x="1105.6" y="266.5" width="14.4" height="1.5"/>
+<line class="base" x1="0" x2="1120" y1="268.5" y2="268.5"/>
+<line class="thr" x1="0" x2="1120" y1="146.0" y2="146.0" pathLength="1"/>
+</svg>
+          <span class="tag t-thr"><span class="ko">임계값</span><span class="en">Threshold</span></span>
+          <span class="tag t-over"><span class="ko">초과 4일</span><span class="en">4 days above</span></span>
+        </div>
+        <figcaption>
+          <span class="ko">설명을 위한 예시 그림입니다. 일 강우량이 임계값을 넘은 날을 세는 것이 우리가 만드는 지수의 출발점입니다.</span>
+          <span class="en">An illustration, not observed data. Counting the days when daily rainfall crosses a threshold is where our indices start.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="work">
+    <div class="wrap">
+      <h2><span class="ko">하는 일</span><span class="en">What we do</span></h2>
+      <div class="three">
+        <div>
+          <h3><span class="ko">연구</span><span class="en">Research</span></h3>
+          <p><span class="ko">공개된 기상자료와 재난 기록으로 임계값 기반 지수를 만들고 검증합니다. 논문과 코드를 공개합니다.</span><span class="en">We build and test threshold-based indices from public weather data and disaster records, and publish the papers and code.</span></p>
+        </div>
+        <div>
+          <h3><span class="ko">도구</span><span class="en">Tools</span></h3>
+          <p><span class="ko">지수를 현장 담당자가 그날 바로 쓸 수 있는 브리핑과 지도로 만듭니다.</span><span class="en">We turn indices into briefings and maps that field officers can use the same day.</span></p>
+        </div>
+        <div>
+          <h3><span class="ko">자문</span><span class="en">Advisory</span></h3>
+          <p><span class="ko">경보 기준과 위험지도, 기상 트리거가 실제 사건과 맞는지 독립적으로 점검합니다.</span><span class="en">We check, independently, whether warning criteria, hazard maps and weather triggers hold up against real events.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="areas">
+    <div class="wrap">
+      <h2><span class="ko">연구 분야</span><span class="en">Focus areas</span></h2>
+      <div>
+        <ul class="areas">
+          <li style="--c:var(--c-slide)">
+            <h3><span class="ko">산사태</span><span class="en">Landslides</span></h3>
+            <p><span class="ko">호우 특보가 내려진 시군 안에서 어디부터 점검해야 하는지를, 사건 강우와 과거 발생 이력으로 순위를 매깁니다.</span><span class="en">Within a county under a heavy-rain warning, which townships should be inspected first? We rank them using event rainfall and past occurrence records.</span></p>
+          </li>
+          <li style="--c:var(--c-rain)">
+            <h3><span class="ko">집중호우</span><span class="en">Extreme rainfall</span></h3>
+            <p><span class="ko">관측소 사이에서 격자 자료가 놓치는 큰비를 찾고, 관측망과 거리에 따라 임계값을 어떻게 보정해야 하는지 연구합니다.</span><span class="en">Gridded rainfall can miss the heaviest rain between gauges. We study where that happens and how thresholds should be adjusted for network density and distance.</span></p>
+          </li>
+          <li style="--c:var(--c-fire)">
+            <h3><span class="ko">산불</span><span class="en">Wildfire</span></h3>
+            <p><span class="ko">오후 최저 습도와 연료 건조도, 복잡한 지형의 바람 관측이 발화와 확산 예측에 어떤 차이를 만드는지 분석합니다.</span><span class="en">How much do the afternoon humidity minimum, fuel dryness and wind observations in complex terrain change ignition and spread prediction?</span></p>
+          </li>
+        </ul>
+
+        <p class="sub"><span class="ko">다음으로 준비하는 분야</span><span class="en">Next</span></p>
+        <ul class="areas">
+          <li class="next" style="--c:var(--c-dry)">
+            <h3><span class="ko">가뭄</span><span class="en">Drought</span></h3>
+            <p><span class="ko">산림이 건조 스트레스를 받기 시작하는 기상 임계값. 개요를 잡는 단계입니다.</span><span class="en">Weather thresholds at which forests begin to show drought stress. At the outline stage.</span></p>
+          </li>
+          <li class="next" style="--c:var(--c-pest)">
+            <h3><span class="ko">산림병해충</span><span class="en">Forest pests</span></h3>
+            <p><span class="ko">소나무재선충병 매개충처럼 기온에 따라 발생 시기가 정해지는 해충의 임계값. 개요를 잡는 단계입니다.</span><span class="en">Temperature thresholds that set the timing of forest pests, such as the vectors of pine wilt disease. At the outline stage.</span></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="tools">
+    <div class="wrap">
+      <h2><span class="ko">서비스</span><span class="en">Tools</span></h2>
+      <div>
+        <div class="tools">
+          <article class="tool" style="--c:var(--c-slide)">
+            <span class="status"><span class="ko">개발 중</span><span class="en">In development</span></span>
+            <h3><span class="ko">산사태 점검 우선순위 브리핑</span><span class="en">Landslide inspection-priority briefing</span></h3>
+            <p><span class="ko">큰비가 예보되면 시군 안의 읍면별 점검 순위와, 그 순위가 나온 근거를 함께 보여줍니다. 시군 산사태 담당자를 위한 도구입니다.</span><span class="en">When heavy rain is forecast, the briefing ranks the townships in a county for inspection and shows the reason behind each rank. Built for county landslide officers.</span></p>
+          </article>
+          <article class="tool" style="--c:var(--c-fire)">
+            <span class="status"><span class="ko">개발 중</span><span class="en">In development</span></span>
+            <h3><span class="ko">산불 연료 건조도 지수</span><span class="en">Wildfire fuel-dryness index</span></h3>
+            <p><span class="ko">기상자료로 연료 건조도를 계산해, 발화 위험이 높아지는 시간대와 지역을 보여줍니다.</span><span class="en">Fuel dryness computed from weather data, showing the hours and places where ignition risk rises.</span></p>
+          </article>
+        </div>
+        <p class="note">
+          <span class="ko">이 도구들은 판단을 돕는 참고 정보입니다. 기상청 특보나 산림청·지방자치단체의 산사태 예·경보를 대신하지 않습니다.</span>
+          <span class="en">These tools support decisions. They do not replace official weather warnings or landslide alerts issued by the Korea Meteorological Administration, the Korea Forest Service or local governments.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pubs">
+    <div class="wrap">
+      <h2><span class="ko">논문</span><span class="en">Publications</span></h2>
+      <ul class="pubs">
+        <li>
+          <span class="kind"><span class="ko">프리프린트</span><span class="en">Preprint</span> 2026</span>
+          <div>
+            <div class="title">Can national datasets refine county-level landslide warnings? Event rainfall outperforms static susceptibility, and reported AUC predicts neither</div>
+            <div class="meta">S. H. Min. <a href="https://doi.org/10.5281/zenodo.22308899">doi:10.5281/zenodo.22308899</a></div>
+          </div>
+        </li>
+        <li>
+          <span class="kind"><span class="ko">프리프린트</span><span class="en">Preprint</span> 2026</span>
+          <div>
+            <div class="title">Interpolation loses rainfall extremes, not orographic gradients: a five-year test against 463 independent mountain gauges</div>
+            <div class="meta">S. H. Min, K.-C. Jang. <a href="https://doi.org/10.31223/X5FF7K">doi:10.31223/X5FF7K</a></div>
+          </div>
+        </li>
+        <li>
+          <span class="kind"><span class="ko">프리프린트</span><span class="en">Preprint</span> 2026</span>
+          <div>
+            <div class="title">Wildfire ignition responds to the afternoon humidity minimum: temporal resolution and observing-network requirements for fuel-dryness inputs in Korea</div>
+            <div class="meta">S. H. Min, K.-C. Jang. <a href="https://doi.org/10.5281/zenodo.23124733">doi:10.5281/zenodo.23124733</a></div>
+          </div>
+        </li>
+        <li>
+          <span class="kind"><span class="ko">프리프린트</span><span class="en">Preprint</span> 2026</span>
+          <div>
+            <div class="title">Station exposure, not network membership, determines what surface observations add to the wind input of wildfire spread prediction in complex terrain</div>
+            <div class="meta">S. H. Min, K.-C. Jang. <a href="https://zenodo.org/records/23141120">zenodo.org/records/23141120</a></div>
+          </div>
+        </li>
+        <li>
+          <span class="kind"><span class="ko">학술지</span><span class="en">Journal</span> 2022</span>
+          <div>
+            <div class="title">Mountain meteorology data for forest disaster prevention and forest management</div>
+            <div class="meta">K. C. Jang, S. H. Min, I. H. Kim, J. H. Chun, M. S. Won. Korean Journal of Agricultural and Forest Meteorology 24(4), 346–352.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="advisory">
+    <div class="wrap">
+      <h2><span class="ko">자문</span><span class="en">Advisory</span></h2>
+      <div>
+        <p class="lead">
+          <span class="ko">기준이 실제 사건과 맞는지 확인이 필요할 때 연락 주세요.</span>
+          <span class="en">Get in touch when you need to know whether a criterion holds up against real events.</span>
+        </p>
+        <ul class="adv">
+          <li><b><span class="ko">지수 설계</span><span class="en">Index design</span></b>
+            <span><span class="ko">현장의 문제를 기상 임계값과 지수로 바꿉니다.</span><span class="en">Turning an operational problem into weather thresholds and an index.</span></span></li>
+          <li><b><span class="ko">경보 기준과 위험지도 검증</span><span class="en">Checking warning criteria and hazard maps</span></b>
+            <span><span class="ko">과거 사건 기록으로 기준과 지도가 실제로 위험한 곳을 가려내는지 점검합니다.</span><span class="en">Testing against past events whether a criterion or map actually separates the places that fail from those that do not.</span></span></li>
+          <li><b><span class="ko">지수형 보험의 기상 트리거 평가</span><span class="en">Weather triggers for index insurance</span></b>
+            <span><span class="ko">격자 강우와 관측망의 한계가 트리거 판정에 주는 오차를 평가합니다.</span><span class="en">Assessing how the limits of gridded rainfall and gauge networks shift trigger decisions.</span></span></li>
+        </ul>
+        <a class="btn fill" href="mailto:karl@climatethreshold.org">karl@climatethreshold.org</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="wrap">
+      <h2><span class="ko">소개</span><span class="en">About</span></h2>
+      <div class="about">
+        <!-- 사진을 쓰려면 같은 폴더에 karl.jpg를 올리세요. 파일이 없으면 이니셜이 보입니다. -->
+        <div class="photo"><img src="karl.jpg" alt="민성현" onerror="this.remove()"><span aria-hidden="true">SM</span></div>
+        <div>
+          <h3><span class="ko">민성현</span><span class="en">Sunghyun (Karl) Min</span></h3>
+          <div class="role"><span class="ko">설립자</span><span class="en">Founder</span></div>
+          <p>
+            <span class="ko">기상자료에서 임계값을 뽑아 현장의 판단 도구로 바꾸는 일을 합니다. 국립산림과학원에서 산악기상과 산림 연료습도를 분석했고(2020–2023), 국가농림기상센터에서 기상·작물 모형을 검증했습니다(2019). 지금은 농촌진흥청 국립농업과학원에서 농업기상을 연구합니다.</span>
+            <span class="en">I turn weather data into thresholds and thresholds into tools for decisions in the field. I worked on mountain meteorology and forest fuel moisture at the National Institute of Forest Science (2020–2023) and on weather and crop model validation at the National Center for AgroMeteorology (2019). I currently work on agricultural meteorology at the National Institute of Agricultural Sciences, RDA.</span>
+          </p>
+          <div class="links">
+            <a href="https://orcid.org/0000-0003-0511-5491">ORCID</a>
+            <a href="https://github.com/Karl7208">GitHub</a>
+            <a data-link="scholar" hidden>Google Scholar</a>
+            <a data-link="linkedin" hidden>LinkedIn</a>
+          </div>
+          <p class="indep" style="margin-top:16px">
+            <span class="ko">Climate Threshold Lab은 독립 연구소이며, 위 기관들과 소속이나 보증 관계가 없습니다.</span>
+            <span class="en">Climate Threshold Lab is independent and is not affiliated with or endorsed by the institutions above.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong>Climate Threshold Lab</strong><br><span class="ko">전주, 대한민국</span><span class="en">Jeonju, South Korea</span></div>
+    <div>
+      <p><a href="mailto:karl@climatethreshold.org">karl@climatethreshold.org</a><span data-wrap="newsletter" hidden> &nbsp;|&nbsp; <a data-link="newsletter"><span class="ko">뉴스레터 구독</span><span class="en">Subscribe to the newsletter</span></a></span></p>
+      <p><span class="ko">자료 출처: 기상청, 산림청 등 공공기관의 공개 자료.</span><span class="en">Data sources: public data from the Korea Meteorological Administration, the Korea Forest Service and other public agencies.</span></p>
+      <p>© 2026 Climate Threshold Lab</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── 여기만 채우면 됩니다 ─────────────────────────────
+   주소를 넣으면 해당 링크가 화면에 나타납니다. 비워 두면 숨겨집니다. */
+var LINKS = {
+  scholar:    "",   // Google Scholar 프로필 주소
+  linkedin:   "",   // LinkedIn 프로필 또는 연구소 페이지 주소
+  newsletter: ""    // 뉴스레터 구독 주소
+};
+/* ─────────────────────────────────────────────── */
+(function(){
+  Object.keys(LINKS).forEach(function(k){
+    if(!LINKS[k]) return;
+    document.querySelectorAll('[data-link="'+k+'"]').forEach(function(a){a.href=LINKS[k];a.hidden=false;});
+    document.querySelectorAll('[data-wrap="'+k+'"]').forEach(function(w){w.hidden=false;});
+  });
+  var root=document.documentElement, btns=document.querySelectorAll('.lang button');
+  function setLang(l,save){
+    root.setAttribute('data-lang',l); root.setAttribute('lang',l);
+    btns.forEach(function(b){b.setAttribute('aria-pressed', String(b.dataset.set===l));});
+    document.title = l==='en' ? 'Climate Threshold Lab | Weather thresholds for forest disasters'
+                              : 'Climate Threshold Lab | 산림재난 기상 임계값 연구소';
+    if(save){try{localStorage.setItem('ctl-lang',l);}catch(e){}}
+  }
+  var saved=null; try{saved=localStorage.getItem('ctl-lang');}catch(e){}
+  var q=(location.search.match(/[?&]lang=(ko|en)/)||[])[1];
+  setLang(q || saved || ((navigator.language||'ko').toLowerCase().indexOf('ko')===0 ? 'ko':'en'), false);
+  btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.set,true);});});
+})();
+</script>
+</body>
+</html>
