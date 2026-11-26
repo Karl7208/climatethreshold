@@ -257,6 +257,9 @@ details.ref>.in{padding:4px 0 28px}
 .tl p{margin:6px 0 0;font-size:16px;max-width:40em}
 @media (max-width:560px){.tl li{grid-template-columns:1fr}}
 
+.appLink{margin:18px 0 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.appLink a{font-weight:600;text-underline-offset:3px}
+
 .news{list-style:none;margin:0;padding:0}
 .news li{display:grid;grid-template-columns:7em minmax(0,1fr);gap:4px 20px;padding:18px 0;border-top:1px solid var(--rule)}
 .news li:last-child{border-bottom:1px solid var(--rule)}
@@ -359,6 +362,10 @@ details.ref>.in{padding:4px 0 28px}
           <a class="btn fill" href="#consult" data-pick="우리 시군 시연 신청"><span class="ko">우리 시군 시연 신청</span><span class="en">Request a demo for your county</span></a>
           <a class="btn" href="#twin"><span class="ko">어떻게 쓰이나</span><span class="en">How it is used</span></a>
         </div>
+        <p class="appLink" data-wrap="landslide_app">
+          <a data-link="landslide_app" href="https://slidecal.dark7208.workers.dev/" target="_blank" rel="noopener"><span class="ko">담당자 앱 열기</span><span class="en">Open the officer app</span> <span aria-hidden="true">↗</span></a>
+          <span class="hint"><span class="ko">지자체 담당자 계정으로 로그인합니다. 계정은 시연 신청 뒤 발급합니다.</span><span class="en">Sign in with a county officer account, issued after a demo request.</span></span>
+        </p>
       </div>
       <figure class="heroVid">
         <video id="heroVid" src="media/hero_loop.mp4" poster="media/hero_loop.jpg" autoplay muted loop playsinline preload="auto" aria-label="비가 내리면서 산 가까운 마을이 있는 500 m 칸의 색이 초록에서 주황, 빨강으로 바뀌는 3차원 지형 영상"></video>
