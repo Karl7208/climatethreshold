@@ -668,8 +668,8 @@ details.ref>.in{padding:4px 0 28px}
 <script>
 /* ── 여기만 고치면 됩니다 ─────────────────────────────── */
 var CONFIG = {
-  SUPABASE_URL: "",       /* Supabase 프로젝트 주소(예: https://abcd1234.supabase.co) */
-  SUPABASE_ANON_KEY: "",  /* Supabase의 anon public 키(공개해도 되는 키). service_role 키는 절대 넣지 마세요. */
+  SUPABASE_URL: "https://xhurbbksyswtvumnbslk.supabase.co",       /* Supabase 프로젝트 주소(예: https://abcd1234.supabase.co) */
+  SUPABASE_ANON_KEY: "sb_publishable_MPETP_1JndsSpBfwybC99w__1_m5f9p",  /* Supabase의 Publishable key(sb_publishable_로 시작, 공개해도 되는 키). Secret key는 절대 넣지 마세요. */
   FORM_ENDPOINT: "",   /* 양식 서비스 주소(예: Formspree의 https://formspree.io/f/xxxx). 비워 두면 메일 앱으로 보냅니다. */
   CONTACT_EMAIL: "shmin@climatethreshold.org",
   REPLAY_URL: "",      /* 리플레이를 공개하면 주소를 넣으세요(예: /replay/). 비워 두면 '공개 준비 중'으로 보입니다. */
@@ -737,7 +737,7 @@ var CONFIG = {
         message:data.message, consent:true, lang:root.getAttribute('data-lang')};
       send.disabled=true;
       fetch(CONFIG.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/enquiries',{method:'POST',
-        headers:{'apikey':CONFIG.SUPABASE_ANON_KEY,'Authorization':'Bearer '+CONFIG.SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+        headers:(function(){var k=CONFIG.SUPABASE_ANON_KEY,h={'apikey':k,'Content-Type':'application/json','Prefer':'return=minimal'}; if(k.indexOf('sb_')!==0) h['Authorization']='Bearer '+k; return h;})(),
         body:JSON.stringify(row)})
         .then(function(r){ if(!r.ok) throw new Error(r.status); form.reset(); say('ok','문의를 받았습니다. 적어 주신 연락처로 답장드리겠습니다.','Thank you. We have your enquiry and will reply to the contact you gave.'); })
         .catch(function(){ say('err','보내지 못했습니다. '+CONFIG.CONTACT_EMAIL+'로 직접 메일을 보내 주세요.','The form could not be sent. Please email '+CONFIG.CONTACT_EMAIL+' directly.'); })
