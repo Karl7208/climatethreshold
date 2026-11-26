@@ -133,7 +133,7 @@
     }
     var dv = document.querySelector('.shot.demo video');
     if (dv) { if (v('demo_poster')) dv.poster = v('demo_poster'); if (v('demo_video')) dv.src = v('demo_video'); }
-    ['linkedin', 'scholar', 'newsletter', 'landslide_app'].forEach(function (k) {
+    ['linkedin', 'linkedin_me', 'scholar', 'newsletter', 'landslide_app'].forEach(function (k) {
       if (k in kv && !String(kv[k] || '').trim()) {   /* 관리자에서 비우면 숨김 */
         document.querySelectorAll('[data-wrap="' + k + '"],[data-link="' + k + '"]').forEach(function (e) { e.hidden = true; });
         return;
