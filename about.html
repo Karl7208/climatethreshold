@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko" data-lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>민성현 | Climate Threshold Lab</title>
+<meta name="description" content="Climate Threshold Lab 설립자 민성현의 경력과 해 온 일, 지금 하는 일.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://climatethreshold.org/about.html">
+<meta property="og:title" content="Climate Threshold Lab">
+<meta property="og:description" content="A digital twin for forest disasters: terrain, rain, past events and homes near the forest on one map.">
+<link rel="canonical" href="https://climatethreshold.org/about.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23173F31'/%3E%3Crect x='6' y='19' width='4' height='7' fill='%23fff'/%3E%3Crect x='14' y='7' width='4' height='19' fill='%23E2572B'/%3E%3Crect x='22' y='16' width='4' height='10' fill='%23fff'/%3E%3Crect x='3' y='12' width='26' height='1.5' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAFBFA; --ink:#14201B; --soft:#55645D; --rule:#D3DAD6; --wash:#EEF2EF;
+  --pine:#173F31; --ember:#C8401E; --ok:#1E6B47;
+  --c-slide:#8A5A2B; --c-rain:#1F5FA8; --c-fire:#C8401E; --c-net:#4A5A8C; --c-dry:#A67C00; --c-pest:#4E7A3A; --c-bee:#9A6B00;
+  --bar:#B9C4BE;
+  --font:"IBM Plex Sans","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --w:1120px; --gut:clamp(20px,4vw,40px);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#101714; --ink:#E7EDE9; --soft:#9DACA4; --rule:#2B3731; --wash:#18211D;
+    --pine:#9FD3BC; --ember:#F0683F; --ok:#7FCFA6;
+    --c-slide:#D19A5E; --c-rain:#6FA8E8; --c-fire:#F0683F; --c-net:#9AA8E0; --c-dry:#E0B93A; --c-pest:#8FC076; --c-bee:#E3B341;
+    --bar:#3A4842;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;padding-bottom:env(safe-area-inset-bottom,0px)}
+html[data-lang="ko"] .en{display:none!important}
+html[data-lang="en"] .ko{display:none!important}
+html[data-lang="en"] body{line-height:1.6}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{color:var(--ember)}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 var(--gut)}
+[hidden]{display:none!important}
+
+/* 머리말 */
+.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.mark{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+.mark svg{width:22px;height:22px;flex:none}
+.nav{display:flex;gap:20px;margin-left:auto;font-size:15px}
+.nav a{text-decoration:none;color:var(--soft)}
+.nav a:hover{color:var(--ink)}
+.ask{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;background:var(--ink);color:var(--paper);text-decoration:none;font-size:14px;font-weight:500;border-radius:2px;white-space:nowrap}
+.ask:hover{background:var(--ember);color:#fff}
+.lang{display:flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;font-size:13px;flex:none}
+.lang button{font:inherit;background:none;border:0;color:var(--soft);padding:5px 12px;cursor:pointer;min-height:32px}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+@media (max-width:900px){.nav{display:none}.ask{margin-left:auto}}
+@media (max-width:420px){.mark span{display:none}}
+
+/* 첫 화면 */
+.hero{padding:clamp(48px,9vw,112px) 0 0}
+.hero h1{font-weight:300;font-size:clamp(32px,5.4vw,62px);line-height:1.22;letter-spacing:-.025em;margin:0;max-width:17em;text-wrap:balance}
+html[data-lang="en"] .hero h1{line-height:1.12;max-width:15em}
+.hero p{font-size:clamp(17px,1.6vw,20px);color:var(--soft);max-width:36em;margin:28px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.btn{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border:1px solid var(--ink);border-radius:2px;text-decoration:none;font-weight:500;font-size:16px;background:none;color:inherit;font-family:inherit;cursor:pointer}
+.btn.fill{background:var(--ink);color:var(--paper)}
+.btn:hover{border-color:var(--ember);color:var(--ember)}
+.btn.fill:hover{background:var(--ember);color:#fff}
+.figure{margin:clamp(40px,7vw,80px) 0 0}
+.plot{position:relative;height:clamp(150px,24vw,280px)}
+.thr-chart{display:block;width:100%;height:100%}
+.thr-chart .bar{fill:var(--bar);transform-box:fill-box;transform-origin:bottom}
+.thr-chart .bar.over{fill:var(--ember)}
+.thr-chart .base{stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
+.thr-chart .thr{stroke:var(--ink);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.tag{position:absolute;font-size:13px;line-height:1;white-space:nowrap}
+.tag.t-thr{left:0;top:48.67%;transform:translateY(-140%);font-weight:500}
+.tag.t-over{right:0;top:0;color:var(--ember);font-weight:500}
+.figure figcaption{font-size:14px;color:var(--soft);margin-top:14px;max-width:44em}
+@media (prefers-reduced-motion:no-preference){
+  .thr-chart .bar{animation:rise .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*12ms)}
+  .thr-chart .thr{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .9s ease-out .75s forwards}
+  .tag{animation:fade .5s ease-out 1.4s both}
+  @keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+}
+
+/* 구역 공통 */
+.sec{border-top:1px solid var(--rule);margin-top:clamp(56px,9vw,104px);padding-top:28px}
+.sec > .wrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:24px var(--gut)}
+.sec h2{font-size:15px;font-weight:600;margin:4px 0 0;color:var(--pine)}
+.sec h2 small{display:block;font-weight:400;color:var(--soft);font-size:13.5px;margin-top:4px;line-height:1.5}
+.lead{font-size:clamp(20px,2.3vw,26px);font-weight:300;line-height:1.5;letter-spacing:-.01em;margin:0 0 32px;max-width:30em}
+html[data-lang="en"] .lead{line-height:1.4}
+.sub{font-size:15px;font-weight:600;margin:40px 0 12px;color:var(--soft)}
+.note{font-size:14px;color:var(--soft);margin:20px 0 0;max-width:46em}
+@media (max-width:820px){.sec > .wrap{grid-template-columns:1fr;gap:12px}}
+
+/* 하는 일 */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gut)}
+.three h3{font-size:19px;font-weight:600;margin:0 0 8px}
+.three p{margin:0;color:var(--soft);font-size:16px}
+@media (max-width:820px){.three{grid-template-columns:1fr;gap:28px}}
+
+/* 연구 줄기 */
+.qs{list-style:none;margin:0;padding:0}
+.qs li{display:grid;grid-template-columns:3.2em minmax(0,1fr) auto;gap:4px 18px;padding:20px 0;border-top:1px solid var(--rule);align-items:start}
+.qs li:last-child{border-bottom:1px solid var(--rule)}
+.qs .no{font-variant-numeric:tabular-nums;font-size:14px;font-weight:600;color:var(--c);padding-top:5px}
+.qs h3{font-size:21px;font-weight:500;margin:0;letter-spacing:-.01em;line-height:1.4}
+.qs p{margin:6px 0 0;color:var(--soft);font-size:16px}
+.chip{display:inline-block;font-size:12.5px;font-weight:500;padding:2px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--soft);white-space:nowrap;margin-top:4px}
+.chip.pub{border-color:var(--ok);color:var(--ok)}
+.chip.pre{border-color:var(--c-rain);color:var(--c-rain)}
+.qs .next .no,.qs .next h3{color:var(--soft)}
+.qs .next h3{font-weight:400}
+@media (max-width:560px){.qs li{grid-template-columns:2.6em minmax(0,1fr)}.qs .chip{grid-column:2}}
+
+/* 카드 (서비스·실적) */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gut)}
+.cards.two{grid-template-columns:1fr 1fr}
+.card{border:1px solid var(--rule);padding:22px;background:var(--wash);display:flex;flex-direction:column;gap:8px}
+.card h3{font-size:18.5px;font-weight:600;margin:4px 0 0;line-height:1.4}
+.card p{margin:0;font-size:15.5px;color:var(--soft)}
+.card .by{font-size:13.5px;color:var(--soft);margin-top:auto;padding-top:6px}
+.card a.go{font-size:15px;font-weight:500;margin-top:4px}
+.status{align-self:flex-start;font-size:13px;font-weight:500;padding:2px 10px;border:1px solid currentColor;border-radius:999px;color:var(--c)}
+@media (max-width:900px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.cards,.cards.two{grid-template-columns:1fr}}
+.pat{margin:24px 0 0;padding:14px 16px;border-left:3px solid var(--pine);background:var(--wash);font-size:15.5px;max-width:46em}
+
+/* 논문 */
+.pubs{list-style:none;margin:0;padding:0}
+.pubs li{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:4px 20px}
+.pubs li:last-child{border-bottom:1px solid var(--rule)}
+.pubs .kind{font-size:13px;font-weight:500;color:var(--soft);padding-top:4px}
+.pubs .title{font-weight:500;font-size:16.5px;line-height:1.5}
+.pubs .meta{font-size:14px;color:var(--soft);margin-top:4px}
+.pubs.co .title{font-weight:400}
+@media (max-width:560px){.pubs li{grid-template-columns:1fr}}
+.grp{font-size:15px;font-weight:600;margin:36px 0 10px;color:var(--ink)}
+.grp:first-child{margin-top:0}
+.grp small{font-weight:400;color:var(--soft);margin-left:6px}
+
+/* 자문·문의 */
+.consult{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--gut);align-items:start}
+@media (max-width:900px){.consult{grid-template-columns:1fr}}
+.adv{list-style:none;margin:0 0 28px;padding:0}
+.adv li{padding:14px 0;border-top:1px solid var(--rule)}
+.adv li:last-child{border-bottom:1px solid var(--rule)}
+.adv b{font-weight:600;display:block;font-size:17px}
+.adv span{color:var(--soft);font-size:15.5px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2em minmax(0,1fr);gap:8px;padding:6px 0;font-size:15.5px}
+.steps li::before{content:counter(s);font-weight:600;color:var(--pine);font-variant-numeric:tabular-nums}
+.form{border:1px solid var(--rule);background:var(--wash);padding:clamp(18px,3vw,28px)}
+.form h3{margin:0 0 4px;font-size:20px;font-weight:600}
+.form .req-note{font-size:13.5px;color:var(--soft);margin:0 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+@media (max-width:560px){.grid2{grid-template-columns:1fr}}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f.full{grid-column:1 / -1}
+.f label,.f legend{font-size:14.5px;font-weight:500}
+.f label i,.f legend i{font-style:normal;color:var(--ember);margin-left:2px}
+.f input,.f select,.f textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:2px;padding:10px 12px;min-height:46px;width:100%}
+.f textarea{min-height:150px;resize:vertical;line-height:1.6}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--ember);outline-offset:0;border-color:var(--ember)}
+.f input:user-invalid,.f select:user-invalid,.f textarea:user-invalid{border-color:var(--ember)}
+fieldset.f{border:0;padding:0;margin:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:2px;background:var(--paper);font-weight:400;cursor:pointer;font-size:15px}
+.opts input{width:18px;height:18px;min-height:0;margin:0;accent-color:var(--pine)}
+.opts label:has(input:checked){border-color:var(--pine);box-shadow:inset 0 0 0 1px var(--pine)}
+.hint{font-size:13px;color:var(--soft);margin:0}
+.consent{margin-top:18px;border:1px solid var(--rule);background:var(--paper);padding:14px 16px;font-size:14px}
+.consent summary{cursor:pointer;font-weight:500}
+.consent dl{display:grid;grid-template-columns:6.5em minmax(0,1fr);gap:4px 12px;margin:10px 0 0}
+.consent dt{color:var(--soft)}
+.consent dd{margin:0}
+.agree{display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:15px;cursor:pointer}
+.agree input{width:20px;height:20px;margin:3px 0 0;flex:none;accent-color:var(--pine)}
+.trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.submit{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.msg{font-size:15px;margin:14px 0 0;padding:12px 14px;border:1px solid}
+.msg.ok{border-color:var(--ok);color:var(--ok)}
+.msg.err{border-color:var(--ember);color:var(--ember)}
+
+/* 소개 */
+.about{display:grid;grid-template-columns:132px minmax(0,1fr);gap:var(--gut);align-items:start}
+.photo{position:relative;width:132px;height:132px;background:var(--pine);color:var(--paper);display:grid;place-items:center;font-size:40px;font-weight:300;overflow:hidden}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.about h3{font-size:22px;font-weight:500;margin:0}
+.about .role{color:var(--soft);font-size:15px;margin:2px 0 14px}
+.about p{margin:0 0 14px;max-width:40em}
+.links{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:15px;margin-top:6px}
+.indep{font-size:14px;color:var(--soft)}
+@media (max-width:560px){.about{grid-template-columns:1fr}.photo{width:96px;height:96px;font-size:30px}}
+
+footer{border-top:1px solid var(--rule);margin-top:clamp(56px,9vw,104px);padding:36px 0 56px;font-size:14.5px;color:var(--soft)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:16px var(--gut)}
+footer strong{color:var(--ink);font-weight:600}
+footer p{margin:0 0 8px;max-width:48em}
+@media (max-width:820px){footer .wrap{grid-template-columns:1fr}}
+
+.eyebrow{font-size:14.5px;font-weight:600;color:var(--pine);margin:0 0 18px}
+.heroGrid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--gut);align-items:center}
+.heroGrid h1{font-size:clamp(30px,4.4vw,52px)}
+@media (max-width:900px){.heroGrid{grid-template-columns:1fr}.stack{max-width:420px}}
+.stack{display:block;width:100%;height:auto}
+.stack .pl{fill:var(--paper);fill-opacity:.92;stroke:var(--ink);stroke-width:1.4;vector-effect:non-scaling-stroke}
+.stack .ct{fill:none;stroke:var(--c-pest);stroke-width:1.6}
+.stack .rn{fill:var(--c-rain)}
+.stack .rc{fill:var(--c-slide)}
+.stack .hs{fill:var(--ink)}
+.stack .pin{fill:none;stroke:var(--ember);stroke-width:3}
+.stack .plumb{stroke:var(--ember);stroke-width:1.6;stroke-dasharray:5 5}
+.stack .bdg{fill:var(--ink)}
+.stack .bdt{fill:var(--paper);font:600 16px var(--font)}
+.layers{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 var(--gut)}
+.layers li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 14px;padding:18px 0;border-top:1px solid var(--rule)}
+.layers .n{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:15px;font-weight:600;margin-top:2px}
+.layers h3{margin:0;font-size:19px;font-weight:600}
+.layers p{margin:4px 0 0;color:var(--soft);font-size:16px}
+@media (max-width:700px){.layers{grid-template-columns:1fr}}
+.shot{margin:28px 0 0}
+.shot img{display:block;width:100%;height:auto;border:1px solid var(--rule)}
+.shot figcaption{font-size:14px;color:var(--soft);margin-top:8px}
+.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 var(--gut)}
+.rules li{padding:16px 0;border-top:1px solid var(--rule)}
+.rules b{display:block;font-weight:600;font-size:17px}
+.rules span.t{color:var(--soft);font-size:16px}
+@media (max-width:700px){.rules{grid-template-columns:1fr}}
+.aboutBig{display:grid;grid-template-columns:160px minmax(0,1fr);gap:var(--gut);align-items:start}
+.aboutBig .photo{width:160px;height:160px}
+.aboutBig h3{font-size:clamp(24px,3vw,32px);font-weight:300;margin:0;letter-spacing:-.01em}
+.aboutBig p{max-width:38em;margin:12px 0 20px;font-size:17px}
+@media (max-width:560px){.aboutBig{grid-template-columns:1fr}.aboutBig .photo{width:104px;height:104px}}
+details.ref{border-top:1px solid var(--rule)}
+details.ref:last-of-type{border-bottom:1px solid var(--rule)}
+details.ref>summary{cursor:pointer;padding:16px 0;font-size:18px;font-weight:500;min-height:48px}
+details.ref>summary small{color:var(--soft);font-weight:400;font-size:14px;margin-left:8px}
+details.ref>.in{padding:4px 0 28px}
+.pageHead{padding:clamp(40px,7vw,88px) 0 0}
+.pageHead .aboutBig h1{font-weight:300;font-size:clamp(30px,4.6vw,52px);line-height:1.2;letter-spacing:-.02em;margin:0}
+.pageHead .role{color:var(--soft);margin:6px 0 16px}
+.back{font-size:15px;color:var(--soft)}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:4px 20px;padding:18px 0;border-top:1px solid var(--rule)}
+.tl li:last-child{border-bottom:1px solid var(--rule)}
+.tl .when{font-size:14.5px;color:var(--soft);font-variant-numeric:tabular-nums;padding-top:3px}
+.tl b{font-size:18px;font-weight:600;display:block}
+.tl .org{color:var(--soft);font-size:15px}
+.tl p{margin:6px 0 0;font-size:16px;max-width:40em}
+@media (max-width:560px){.tl li{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="index.html" aria-label="Climate Threshold Lab">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="19" width="5" height="9" fill="currentColor" opacity=".45"/><rect x="13.5" y="5" width="5" height="23" fill="var(--ember)"/><rect x="23" y="16" width="5" height="12" fill="currentColor" opacity=".45"/><rect x="1" y="11" width="30" height="1.6" fill="currentColor"/></svg>
+      <span>Climate Threshold Lab</span>
+    </a>
+    <nav class="nav" aria-label="구역">
+      <a href="index.html#twin"><span class="ko">디지털 트윈</span><span class="en">Digital twin</span></a>
+      <a href="index.html#consult"><span class="ko">컨설팅</span><span class="en">Consulting</span></a>
+      <a href="index.html#consult"><span class="ko">컨설팅</span><span class="en">Consulting</span></a>
+      <a href="index.html#consult"><span class="ko">컨설팅</span><span class="en">Consulting</span></a>
+      <a href="index.html#consult"><span class="ko">컨설팅</span><span class="en">Consulting</span></a>
+      <a href="index.html#consult"><span class="ko">컨설팅</span><span class="en">Consulting</span></a>
+      <a href="index.html#ledger"><span class="ko">기술과 근거</span><span class="en">Evidence</span></a>
+      <a href="about.html">About</a>
+      <a href="index.html#refs"><span class="ko">참고</span><span class="en">References</span></a>
+    </nav>
+    <a class="ask" href="index.html#consult"><span class="ko">자문 문의</span><span class="en">Enquire</span></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-set="ko" aria-pressed="true">한국어</button>
+      <button type="button" data-set="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="pageHead">
+    <div class="wrap">
+      <div class="aboutBig">
+        <div class="photo"><img src="karl.jpg" alt="민성현" onerror="this.remove()"><span aria-hidden="true">SM</span></div>
+        <div>
+          <h1><span class="ko">민성현</span><span class="en">Sunghyun (Karl) Min</span></h1>
+          <div class="role"><span class="ko">Climate Threshold Lab 설립자</span><span class="en">Founder, Climate Threshold Lab</span></div>
+          <p><span class="ko">기상자료에서 임계값을 뽑아 현장의 판단 도구로 바꾸는 일을 합니다. 관측소를 세우는 일부터 자료 분석, 지수 설계, 매일 도는 서비스까지 한 흐름으로 해 왔습니다.</span><span class="en">I turn weather data into thresholds and thresholds into tools for decisions in the field. My work has run the whole way from building stations to data analysis, index design and services that update every day.</span></p>
+          <div class="links">
+            <a href="mailto:shmin@climatethreshold.org">shmin@climatethreshold.org</a>
+            <a href="https://orcid.org/0000-0003-0511-5491">ORCID</a>
+            <a href="https://github.com/Karl7208">GitHub</a>
+            <a data-link="linkedin" hidden>LinkedIn</a>
+            <a data-link="scholar" hidden>Google Scholar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="now">
+    <div class="wrap">
+      <h2><span class="ko">지금 하는 일</span><span class="en">What I do now</span></h2>
+      <ul class="rules">
+        <li><b><span class="ko">산림재난 디지털 트윈</span><span class="en">Forest-disaster digital twin</span></b><span class="t"><span class="ko">Climate Threshold Lab에서 산사태 점검 순서를 돕는 도구를 만들고, 산불과 집중호우로 넓히고 있습니다. <a href="index.html#twin">자세히</a></span><span class="en">At Climate Threshold Lab I build the tool that helps order landslide inspections, and am extending it to wildfire and extreme rainfall. <a href="index.html#twin">More</a></span></span></li>
+        <li><b><span class="ko">산림재난 연구</span><span class="en">Forest-disaster research</span></b><span class="t"><span class="ko">산사태·강우, 산불, 산악기상 원고를 써서 투고했고, 관련 특허 5건을 출원했습니다.</span><span class="en">Manuscripts on landslides and rainfall, wildfire and mountain meteorology are submitted, with five related patent applications filed.</span></span></li>
+        <li><b><span class="ko">꿀벌과 기상</span><span class="en">Honey bees and weather</span></b><span class="t"><span class="ko">국립농업과학원 양봉과에서 기상 기반 지수와 꿀 작황 전망 서비스를 연구·개발합니다.</span><span class="en">With the Apiculture Division of the National Institute of Agricultural Sciences, I work on weather-based indices and a honey outlook service.</span></span></li>
+        <li><b><span class="ko">박사학위</span><span class="en">Doctorate</span></b><span class="t"><span class="ko">전북대학교 원예학 박사과정으로, 키위 수분과 기상을 다룬 학위논문을 심사받고 있습니다.</span><span class="en">PhD candidate in Horticulture at Jeonbuk National University; my thesis on kiwifruit pollination and weather is under examination.</span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="career">
+    <div class="wrap">
+      <h2><span class="ko">경력</span><span class="en">Career</span></h2>
+      <ol class="tl">
+        <li><span class="when">2026.10 ~</span><div><b>Climate Threshold Lab</b><span class="org"><span class="ko">설립자</span><span class="en">Founder</span></span>
+          <p><span class="ko">산림재난 디지털 트윈과 산사태·산불·집중호우의 기상 임계값 연구, 자문.</span><span class="en">Forest-disaster digital twin; research on weather thresholds for landslides, wildfire and extreme rainfall; advisory work.</span></p></div></li>
+        <li><span class="when">2023.10 ~</span><div><b><span class="ko">국립농업과학원 양봉과</span><span class="en">Apiculture Division, National Institute of Agricultural Sciences</span></b><span class="org"><span class="ko">연구원</span><span class="en">Researcher</span></span>
+          <p><span class="ko">1 km 기상 격자와 기상 기반 지수를 만들고, 아까시 꿀 작황 전망 서비스를 개발했습니다.</span><span class="en">Built 1 km weather grids and weather-based indices, and developed the black locust honey outlook service.</span></p></div></li>
+        <li><span class="when">2020.01 ~ 2023.10</span><div><b><span class="ko">국립산림과학원</span><span class="en">National Institute of Forest Science</span></b><span class="org"><span class="ko">연구원</span><span class="en">Researcher</span></span>
+          <p><span class="ko">산악기상관측망 자료와 산림 연료습도를 분석해 산불·산사태 연구에 썼습니다. 기후변화와 산악기상 보고서를 함께 썼습니다.</span><span class="en">Analysed mountain weather network data and forest fuel moisture for wildfire and landslide research, and co-wrote a report on climate change and mountain meteorology.</span></p></div></li>
+        <li><span class="when">2019.02 ~ 2019.12</span><div><b><span class="ko">국가농림기상센터</span><span class="en">National Center for AgroMeteorology</span></b><span class="org"><span class="ko">연구원</span><span class="en">Researcher</span></span>
+          <p><span class="ko">기상 모형(LAMP)을 검증하고 작물 모형(DSSAT)과 잇는 일을 했습니다.</span><span class="en">Validated the LAMP weather model and linked it to the DSSAT crop model.</span></p></div></li>
+        <li><span class="when"><span class="ko">2019년 이전</span><span class="en">Before 2019</span></span><div><b><span class="ko">국립농업과학원</span><span class="en">National Institute of Agricultural Sciences</span></b><span class="org"><span class="ko">연구원</span><span class="en">Researcher</span></span>
+          <p><span class="ko">에디 공분산으로 논과 과수원의 탄소 플럭스를 재고 탄소수지를 연구했습니다.</span><span class="en">Measured carbon fluxes over rice paddies and orchards with eddy covariance and studied their carbon budgets.</span></p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="done">
+    <div class="wrap">
+      <h2><span class="ko">해 온 일</span><span class="en">What I have done</span></h2>
+      <ul class="rules">
+        <li><b><span class="ko">관측</span><span class="en">Observation</span></b><span class="t"><span class="ko">산림 연료습도 관측을 현장 설치부터 자료 처리까지 맡았고, 논과 과수원에서 플럭스 타워를 운영했습니다.</span><span class="en">Ran forest fuel-moisture observation from field installation to data processing, and operated flux towers over paddies and orchards.</span></span></li>
+        <li><b><span class="ko">자료와 모형</span><span class="en">Data and models</span></b><span class="t"><span class="ko">관측망 자료의 품질관리, 1 km 기상 격자, 기상 모형 검증, 기후변화 시나리오 자료를 다뤘습니다.</span><span class="en">Quality control of station networks, 1 km weather grids, weather model validation and climate scenario data.</span></span></li>
+        <li><b><span class="ko">지수</span><span class="en">Indices</span></b><span class="t"><span class="ko">산사태 점검 순서, 산불 연료 건조도, 꿀 수량과 품질, 키위 수분에 쓰는 기상 기반 지수를 설계하고 검증했습니다.</span><span class="en">Designed and tested weather-based indices for landslide inspection order, wildfire fuel dryness, honey yield and quality, and kiwifruit pollination.</span></span></li>
+        <li><b><span class="ko">서비스</span><span class="en">Services</span></b><span class="t"><span class="ko">지수를 매일 자동으로 갱신되는 공개 서비스로 만들어 운영했습니다. <a href="index.html#refs">목록 보기</a></span><span class="en">Turned indices into public services that update automatically every day. <a href="index.html#refs">See the list</a></span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="edu">
+    <div class="wrap">
+      <h2><span class="ko">학력</span><span class="en">Education</span></h2>
+      <ol class="tl">
+        <li><span class="when"><span class="ko">박사과정</span><span class="en">PhD candidate</span></span><div><b><span class="ko">전북대학교 원예학과</span><span class="en">Horticulture, Jeonbuk National University</span></b>
+          <p><span class="ko">키위 수분과 기상(학위논문 심사 중).</span><span class="en">Kiwifruit pollination and weather (thesis under examination).</span></p></div></li>
+        <li><span class="when"><span class="ko">석사</span><span class="en">Master's</span></span><div><b><span class="ko">건국대학교</span><span class="en">Konkuk University</span></b>
+          <p><span class="ko">에디 공분산 플럭스 관측.</span><span class="en">Eddy-covariance flux measurement.</span></p></div></li>
+      </ol>
+      </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2><span class="ko">더 보기</span><span class="en">More</span></h2>
+      <div>
+        <div class="cta" style="margin-top:0">
+          <a class="btn fill" href="index.html#consult"><span class="ko">자문 문의</span><span class="en">Make an enquiry</span></a>
+          <a class="btn" href="index.html#refs"><span class="ko">논문과 서비스 목록</span><span class="en">Papers and services</span></a>
+        </div>
+        <p class="indep" style="margin-top:20px"><span class="ko">Climate Threshold Lab은 독립 연구소이며, 위 기관들과 소속이나 보증 관계가 없습니다.</span><span class="en">Climate Threshold Lab is independent and is not affiliated with or endorsed by the institutions above.</span></p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <div><strong>Climate Threshold Lab</strong><br><span class="ko">전주, 대한민국</span><span class="en">Jeonju, South Korea</span></div>
+    <div>
+      <p><a href="mailto:shmin@climatethreshold.org">shmin@climatethreshold.org</a><span data-wrap="newsletter" hidden> &nbsp;|&nbsp; <a data-link="newsletter"><span class="ko">뉴스레터 구독</span><span class="en">Newsletter</span></a></span></p>
+      <p><span class="ko">자료 출처: 기상청, 산림청 등 공공기관의 공개 자료.</span><span class="en">Data sources: public data from the Korea Meteorological Administration, the Korea Forest Service and other public agencies.</span></p>
+      <p>© 2026 Climate Threshold Lab</p>
+    </div>
+  </div>
+</footer>
+<script>
+/* ── 여기만 고치면 됩니다 ─────────────────────────────── */
+var CONFIG = {
+  FORM_ENDPOINT: "",   /* 양식 서비스 주소(예: Formspree의 https://formspree.io/f/xxxx). 비워 두면 메일 앱으로 보냅니다. */
+  CONTACT_EMAIL: "shmin@climatethreshold.org",
+  REPLAY_URL: "",      /* 리플레이를 공개하면 주소를 넣으세요(예: /replay/). 비워 두면 '공개 준비 중'으로 보입니다. */
+  HORNET_OPEN: false,  /* 말벌 특허 출원번호를 확인한 뒤 true로 바꾸세요. */
+  LINKS: {
+    linkedin:   "https://www.linkedin.com/company/climate-threshold-lab",
+    scholar:    "",
+    newsletter: ""
+  }
+};
+/* ───────────────────────────────────────────────── */
+(function(){
+  var root=document.documentElement;
+  Object.keys(CONFIG.LINKS).forEach(function(k){
+    if(!CONFIG.LINKS[k]) return;
+    document.querySelectorAll('[data-link="'+k+'"]').forEach(function(a){a.href=CONFIG.LINKS[k];a.hidden=false;});
+    document.querySelectorAll('[data-wrap="'+k+'"]').forEach(function(w){w.hidden=false;});
+  });
+  if(CONFIG.HORNET_OPEN) document.querySelectorAll('[data-gate="hornet"]').forEach(function(e){e.hidden=false;});
+  if(CONFIG.REPLAY_URL && document.getElementById('replayLink')){
+    var l=document.getElementById('replayLink'); l.href=CONFIG.REPLAY_URL; l.hidden=false;
+    var s=document.getElementById('replayStatus'); s.innerHTML='<span class="ko">공개</span><span class="en">Public</span>';
+  }
+
+  /* 언어 */
+  var btns=document.querySelectorAll('.lang button');
+  function setLang(l,save){
+    root.setAttribute('data-lang',l); root.setAttribute('lang',l);
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===l));});
+    document.querySelectorAll('option[data-ko]').forEach(function(o){o.textContent=o.dataset[l];});
+    document.title = l==='en' ? 'Climate Threshold Lab | Weather thresholds for forest disasters' : 'Climate Threshold Lab | 산림재난 기상 임계값 연구소';
+    if(save){try{localStorage.setItem('ctl-lang',l);}catch(e){}}
+  }
+  var saved=null; try{saved=localStorage.getItem('ctl-lang');}catch(e){}
+  var q=(location.search.match(/[?&]lang=(ko|en)/)||[])[1];
+  setLang(q||saved||((navigator.language||'ko').toLowerCase().indexOf('ko')===0?'ko':'en'),false);
+  btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.set,true);});});
+
+  /* 문의 양식 */
+  var form=document.getElementById('enquiry'), out=document.getElementById('f-msg-out'), send=document.getElementById('f-send');
+  if(!form) return;
+  var d=new Date(); d.setDate(d.getDate()+1);
+  document.getElementById('f-date').min=d.toISOString().slice(0,10);
+  function L(ko,en){return root.getAttribute('data-lang')==='en'?en:ko;}
+  function say(kind,ko,en){out.hidden=false; out.className='msg '+kind; out.textContent=L(ko,en);}
+  function collect(){
+    var fd=new FormData(form), o={};
+    fd.forEach(function(v,k){ if(k==='_gotcha') return; o[k]=o[k]?o[k]+', '+v:v; });
+    return o;
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(form.querySelector('[name="_gotcha"]').value) return;
+    if(!form.checkValidity()){
+      var bad=form.querySelector(':invalid'); if(bad) bad.focus();
+      if(bad&&bad.id==='f-agree') say('err','개인정보 수집·이용에 동의해야 보낼 수 있습니다.','Please agree to the use of your information to send the form.');
+      else say('err','표시한 칸을 확인해 주세요.','Please check the highlighted fields.');
+      form.reportValidity(); return;
+    }
+    var data=collect(); data._subject='[Climate Threshold Lab] '+(data.type||'문의')+' · '+data.organisation;
+    if(!CONFIG.FORM_ENDPOINT){
+      var lines=[]; Object.keys(data).forEach(function(k){ if(k!=='_subject') lines.push(k+': '+data[k]); });
+      location.href='mailto:'+CONFIG.CONTACT_EMAIL+'?subject='+encodeURIComponent(data._subject)+'&body='+encodeURIComponent(lines.join('\n'));
+      say('ok','메일 앱에 내용을 채워 두었습니다. 메일 앱에서 보내기를 눌러 주세요.','Your email app now has the enquiry filled in. Press send there to finish.');
+      return;
+    }
+    send.disabled=true;
+    var body=new FormData(); Object.keys(data).forEach(function(k){body.append(k,data[k]);});
+    fetch(CONFIG.FORM_ENDPOINT,{method:'POST',body:body,headers:{'Accept':'application/json'}})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); form.reset(); say('ok','문의를 받았습니다. 적어 주신 연락처로 답장드리겠습니다.','Thank you. We have your enquiry and will reply to the contact you gave.'); })
+      .catch(function(){ say('err','보내지 못했습니다. '+CONFIG.CONTACT_EMAIL+'로 직접 메일을 보내 주세요.','The form could not be sent. Please email '+CONFIG.CONTACT_EMAIL+' directly.'); })
+      .then(function(){ send.disabled=false; });
+  });
+})();
+</script>
+</body>
+</html>
